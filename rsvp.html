@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RSVP · Jonathan &amp; Vivien</title>
+  <meta name="description" content="Kindly respond to Jonathan and Vivien's wedding reception brunch." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' font-family='Georgia' font-style='italic' font-size='22' fill='%236B7A5C'%3E%26%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <nav class="site-nav is-solid">
+    <a href="index.html" class="nav-brand">J &amp; V</a>
+    <a href="index.html" class="nav-back">Back</a>
+  </nav>
+
+  <header class="page-head">
+    <p class="eyebrow fade-in" style="--delay: 100ms">Kindly respond by 1 September 2026</p>
+    <h1 class="fade-in" style="--delay: 200ms">RSVP</h1>
+    <p class="lede fade-in" style="--delay: 400ms">
+      A few small details so we can welcome you properly.
+    </p>
+    <div class="ornament fade-in" style="--delay: 600ms">
+      <span class="ornament-glyph">❦</span>
+    </div>
+  </header>
+
+  <!--
+    =================================================================
+    FORM MODE SWITCH + RESPONSE BACKEND
+    =================================================================
+    Two ready-to-use modes below. Pick one:
+
+      [A] Native HTML form  — submits to Formspree (recommended).
+      [B] Jotform iframe    — drop your Jotform embed URL in.
+
+    To switch: change `data-form-mode` on <section class="form-wrap">
+       data-form-mode="native"   → shows the native form
+       data-form-mode="jotform"  → shows the Jotform iframe block
+
+    For [A] — Formspree (recommended for GitHub Pages):
+      1. Sign up free at https://formspree.io/
+      2. Create a new form and copy the endpoint, e.g.
+            https://formspree.io/f/abcd1234
+      3. Replace REPLACE_WITH_YOUR_FORMSPREE_ID below in the <form action>
+      4. Optional: set up email notifications + auto-reply in Formspree
+    =================================================================
+  -->
+  <section class="form-wrap" data-form-mode="native">
+    <div class="container">
+
+      <!-- ===== [A] NATIVE FORM (submits to Formspree) ===== -->
+      <form
+        class="form-grid"
+        data-rsvp-form
+        data-mode-target="native"
+        action="https://formspree.io/f/maqzjeed"
+        method="POST"
+        novalidate>
+
+        <!-- Full name -->
+        <div class="field reveal" data-field="full_name">
+          <label class="field-label" for="full-name">
+            Full Name <span class="req">*</span>
+          </label>
+          <input
+            id="full-name"
+            class="field-input"
+            type="text"
+            name="full_name"
+            autocomplete="name"
+            required
+            placeholder="As you'd like it on the place card" />
+          <span class="field-error" data-error-for="full_name"></span>
+        </div>
+
+        <!-- Attendance -->
+        <div class="field reveal reveal-delay-1" data-field="attendance">
+          <span class="field-label">
+            Will you join us? <span class="req">*</span>
+          </span>
+          <div class="choice-group" role="radiogroup" aria-label="Attendance">
+            <div class="choice">
+              <input type="radio" id="att-yes" name="attendance" value="yes" required checked />
+              <label for="att-yes">
+                Joyfully accept
+                <small>Count me in</small>
+              </label>
+            </div>
+            <div class="choice">
+              <input type="radio" id="att-no" name="attendance" value="no" />
+              <label for="att-no">
+                Regretfully decline
+                <small>With love from afar</small>
+              </label>
+            </div>
+          </div>
+          <span class="field-error" data-error-for="attendance"></span>
+        </div>
+
+        <!-- Additional attendees counter + nested conditional names -->
+        <div class="field field-attending reveal reveal-delay-2">
+          <span class="field-label">Additional Attendees</span>
+          <p class="field-hint">How many more guests will be joining you? (Max 4 additional)</p>
+          <div class="field-counter" data-counter data-max="4" data-min="0">
+            <button type="button" class="counter-btn" data-counter-decrement aria-label="Fewer guests">−</button>
+            <span class="counter-value">0</span>
+            <button type="button" class="counter-btn" data-counter-increment aria-label="More guests">+</button>
+            <input type="hidden" name="additional_attendees" value="0" />
+          </div>
+
+          <!-- Conditional, nested inside the same field so the gap collapses cleanly -->
+          <div class="field-conditional" data-conditional="guest-names" data-field="guest_names">
+            <div class="field-conditional-inner">
+              <label class="field-label" for="guest-names">
+                <span data-guest-label>Name of Your Guest</span>
+              </label>
+              <p class="field-hint" data-guest-hint>One name, please.</p>
+              <textarea
+                id="guest-names"
+                class="field-textarea"
+                name="guest_names"
+                rows="2"
+                placeholder="Their full name"></textarea>
+              <span class="field-error" data-error-for="guest_names"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dietary -->
+        <div class="field field-attending reveal">
+          <label class="field-label" for="diet">
+            Allergies or Dietary Restrictions
+          </label>
+          <p class="field-hint">Anything our kitchen should know about? Leave blank if none.</p>
+          <textarea
+            id="diet"
+            class="field-textarea"
+            name="dietary"
+            rows="3"
+            placeholder="e.g. vegetarian, nut allergy, gluten-free"></textarea>
+        </div>
+
+        <!-- WhatsApp number -->
+        <div class="field field-attending reveal reveal-delay-1" data-field="phone">
+          <label class="field-label" for="phone">
+            WhatsApp Number <span class="req">*</span>
+          </label>
+          <p class="field-hint">
+            We'll share wedding updates here, so please include your country
+            code (e.g. <strong>+60</strong> for Malaysia).
+          </p>
+          <input
+            id="phone"
+            class="field-input"
+            type="tel"
+            name="phone"
+            autocomplete="tel"
+            inputmode="tel"
+            placeholder="+60 12 345 6789"
+            required />
+          <span class="field-error" data-error-for="phone"></span>
+        </div>
+
+        <!-- Message -->
+        <div class="field field-attending reveal reveal-delay-2">
+          <label class="field-label" for="message">
+            A Note for the Couple
+          </label>
+          <p class="field-hint">Wishes, a song request, anything at all.</p>
+          <textarea
+            id="message"
+            class="field-textarea"
+            name="message"
+            rows="4"
+            placeholder="(optional)"></textarea>
+        </div>
+
+        <div class="form-submit reveal">
+          <button type="submit" class="btn">Send RSVP</button>
+        </div>
+
+        <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+
+      </form>
+
+      <!-- ===== [B] JOTFORM IFRAME ===== -->
+      <!--
+        To enable: set data-form-mode="jotform" on the parent <section> above.
+        Then paste your Jotform embed URL into the iframe src below.
+        Free Jotform sign-up: https://www.jotform.com/
+        Recommended: build the form there, theme it with the brand colours
+        (#6B7A5C, #B8965E, #FAF7F2), then grab the "Embed" URL.
+      -->
+      <div class="jotform-slot" data-mode-target="jotform">
+        <iframe
+          title="RSVP for Jonathan and Vivien"
+          src="https://form.jotform.com/REPLACE_WITH_YOUR_FORM_ID"
+          frameborder="0"
+          scrolling="auto"
+          allowtransparency="true"
+          allowfullscreen="true"></iframe>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <span>With love, J &amp; V</span>
+  </footer>
+
+  <!--
+    Optional Lottie slot — drop a `.lottie` or `.json` URL from
+    https://lottiefiles.com into the src attribute below.
+  -->
+  <!-- <div class="lottie-slot"><dotlottie-player src="" autoplay loop background="transparent"></dotlottie-player></div> -->
+
+  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js" type="module"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

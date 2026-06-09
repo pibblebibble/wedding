@@ -1,0 +1,18 @@
+# OS junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local Claude Code preview config (not needed in the repo)
+.claude/
+
+# Node, if added later
+node_modules/
+npm-debug.log*
