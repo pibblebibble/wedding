@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <nav class="site-nav fade-in" style="--delay: 1800ms">
+  <nav class="site-nav fade-in" style="--delay: 1000ms">
     <span class="nav-brand">J &amp; V</span>
     <span class="nav-back" style="cursor:default;">01 · 11 · 2026</span>
   </nav>
@@ -41,7 +41,7 @@
 
     <div class="hero-inner">
 
-      <p class="hero-eyebrow fade-in" style="--delay: 100ms">
+      <p class="hero-eyebrow fade-in" style="--delay: 80ms">
         Together with our families
       </p>
 
@@ -51,16 +51,16 @@
         <span data-letters>Vivien</span>
       </h1>
 
-      <div class="ornament fade-in" style="--delay: 2000ms">
+      <div class="ornament fade-in" style="--delay: 1700ms">
         <span class="ornament-glyph">❦</span>
       </div>
 
-      <p class="lede fade-in" style="--delay: 2200ms">
+      <p class="lede fade-in" style="--delay: 1850ms">
         We are getting married, and would be honoured by your presence
         at our reception brunch.
       </p>
 
-      <div class="hero-meta fade-in" style="--delay: 2500ms">
+      <div class="hero-meta fade-in" style="--delay: 2000ms">
         <span>Sunday · 1 November 2026</span>
         <span class="hero-meta-divider"></span>
         <span>Blossom a Glassmansion</span>
@@ -68,10 +68,26 @@
         <span>10:30 AM – 1:30 PM</span>
       </div>
 
-      <div class="hero-cta fade-in" style="--delay: 2800ms">
+      <div class="hero-cta fade-in" style="--delay: 2200ms">
         <div class="hero-cta-pair">
           <a href="rsvp.html" class="btn">RSVP</a>
           <a href="details.html" class="btn btn-outline">Reception Details</a>
+        </div>
+      </div>
+
+      <!-- Hover (or tap) to see them kiss — easter egg moment.
+           Wrapped in fade-in so the entrance animation doesn't fight the
+           photo's own rotation/hover transforms. -->
+      <div class="fade-in" style="--delay: 2450ms">
+        <div class="couple-photo"
+             data-couple-photo
+             tabindex="0"
+             role="button"
+             aria-label="A photo of Jonathan and Vivien — tap or hover for a sweet moment">
+          <img class="couple-photo-img couple-photo-still"
+               src="img/no-kiss.jpg" alt="" loading="lazy" aria-hidden="true" />
+          <img class="couple-photo-img couple-photo-kiss"
+               src="img/kiss.jpg" alt="" loading="lazy" aria-hidden="true" />
         </div>
       </div>
 

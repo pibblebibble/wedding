@@ -320,6 +320,20 @@
     }
   }
 
+  /* ---------- Couple photo (tap-to-kiss for touch + keyboard) ---------- */
+  function setupCouplePhoto() {
+    var photo = document.querySelector('[data-couple-photo]');
+    if (!photo) return;
+    function toggle() { photo.classList.toggle('is-kissing'); }
+    photo.addEventListener('click', toggle);
+    photo.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  }
+
   /* ---------- Boot ---------- */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -332,5 +346,6 @@
     setupScrollReveal();
     setupRsvpForm();
     setupConfetti();
+    setupCouplePhoto();
   }
 })();
