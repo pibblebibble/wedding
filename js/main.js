@@ -219,19 +219,32 @@
       });
     });
 
+    // ---------- Set _next redirect ----------
+    // Formspree's free tier is happiest with a standard form POST + _next
+    // redirect (AJAX is gated behind a custom reCAPTCHA key). We let the
+    // browser submit natively after validation passes — Formspree posts the
+    // entry, then bounces the visitor to thank-you.html via _next.
+    var nextField = form.querySelector('[data-formspree-next]');
+    if (nextField) {
+      try {
+        nextField.value = new URL('thank-you.html', window.location.href).href;
+      } catch (e) {
+        nextField.value = 'thank-you.html';
+      }
+    }
+
     // ---------- Submission ----------
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
       var btn = form.querySelector('button[type="submit"]');
 
       var errs = validate();
       if (errs.length) {
+        e.preventDefault();
         errs.forEach(function (er) { setFieldError(er.field, er.msg); });
         if (statusEl) {
           statusEl.textContent = 'A couple of details still need a look.';
           statusEl.className = 'form-status is-error';
         }
-        // Scroll to first errored field
         var first = form.querySelector('.has-error');
         if (first) {
           first.scrollIntoView({behavior: 'smooth', block: 'center'});
@@ -239,49 +252,28 @@
         return;
       }
 
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Sending…';
-      }
-      if (statusEl) {
-        statusEl.textContent = '';
-        statusEl.className = 'form-status is-info';
-      }
-
+      // Validation passed. Detect preview mode (no real endpoint yet) — in
+      // that case we skip the network round-trip entirely and redirect.
       var endpoint = form.getAttribute('action') || '';
-      var hasFormspree = endpoint && endpoint.indexOf('formspree.io/f/') !== -1
-                         && endpoint.indexOf('REPLACE_WITH_YOUR_FORMSPREE_ID') === -1;
+      var hasFormspree = endpoint
+        && endpoint.indexOf('formspree.io/f/') !== -1
+        && endpoint.indexOf('REPLACE_WITH_YOUR_FORMSPREE_ID') === -1;
 
       if (!hasFormspree) {
-        // No live endpoint yet — preview mode: skip the network round-trip
-        // and go straight to the thank-you page.
+        e.preventDefault();
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
         setTimeout(function () { window.location.href = 'thank-you.html'; }, 500);
         return;
       }
 
-      var data = new FormData(form);
-      fetch(endpoint, {
-        method: 'POST',
-        body: data,
-        headers: {'Accept': 'application/json'}
-      })
-        .then(function (res) {
-          if (res.ok) {
-            window.location.href = 'thank-you.html';
-            return;
-          }
-          return res.json().then(function (body) {
-            throw new Error((body && body.error) || 'Submission failed');
-          });
-        })
-        .catch(function (err) {
-          if (btn) { btn.disabled = false; btn.textContent = 'Send RSVP'; }
-          if (statusEl) {
-            statusEl.textContent = "Hmm, that didn't go through. Please try again, or message us directly.";
-            statusEl.className = 'form-status is-error';
-          }
-          console.warn('RSVP submission error:', err);
-        });
+      // Real Formspree endpoint — let the browser do the POST natively.
+      // It'll navigate to Formspree, then redirect to thank-you.html via _next.
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      if (statusEl) {
+        statusEl.textContent = '';
+        statusEl.className = 'form-status is-info';
+      }
+      // Native submission proceeds — do NOT preventDefault.
     });
   }
 

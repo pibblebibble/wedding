@@ -62,6 +62,11 @@
         method="POST"
         novalidate>
 
+        <!-- Formspree directives — _next is filled in by JS so it works on
+             both localhost and the live github.io domain. -->
+        <input type="hidden" name="_next" data-formspree-next value="" />
+        <input type="hidden" name="_subject" value="Wedding RSVP from your site" />
+
         <!-- Full name -->
         <div class="field reveal" data-field="full_name">
           <label class="field-label" for="full-name">
