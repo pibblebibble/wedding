@@ -321,16 +321,40 @@
   }
 
   /* ---------- Couple photo (tap-to-kiss for touch + keyboard) ---------- */
+  // On desktop the CSS :hover handles it. On touch / keyboard we toggle
+  // an .is-kissing class. Tapping anywhere outside the photo dismisses it
+  // so the kiss never feels "stuck on".
   function setupCouplePhoto() {
     var photo = document.querySelector('[data-couple-photo]');
     if (!photo) return;
+
     function toggle() { photo.classList.toggle('is-kissing'); }
-    photo.addEventListener('click', toggle);
+    function dismiss() {
+      if (photo.classList.contains('is-kissing')) {
+        photo.classList.remove('is-kissing');
+      }
+    }
+
+    photo.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggle();
+    });
+
     photo.addEventListener('keydown', function (e) {
       if (e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
         toggle();
       }
+    });
+
+    // Tap/click anywhere outside the photo → revert to no-kiss.
+    document.addEventListener('click', function (e) {
+      if (!photo.contains(e.target)) dismiss();
+    });
+
+    // Escape key → revert (keyboard equivalent).
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') dismiss();
     });
   }
 
