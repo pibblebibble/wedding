@@ -1,6 +1,6 @@
 # Jonathan &amp; Vivien — Wedding RSVP
 
-A static four-page RSVP site for our wedding reception brunch on **1 November 2026** at Blossom a Glassmansion.
+A static four-page RSVP site for our wedding reception brunch on **1 November 2026**.
 
 Built with plain HTML / CSS / JS — no framework, no build step. Hosts free on GitHub Pages.
 
